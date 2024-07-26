@@ -22,8 +22,14 @@
 				height: 100%;
 				background-color: #121212;
 			}
+			header {
+				text-align: center;
+			}
+			header img {
+				margin-top: 2rem;
+			}
 			form {
-				margin: 2rem 1rem 4rem 1rem;
+				margin: 2rem 1rem 3rem 1rem;
 				text-align: center;
 			}
 			input {
@@ -42,13 +48,16 @@
 			#list {
 				display: flex;
 				flex-wrap: wrap;
+				border-top: 1px dashed #444;
+				border-bottom: 1px dashed #444;
+				padding-top: 2rem;
 			}
 			section {
 				width: 100%;
 				text-align: center;
 				margin: 1rem 1rem 4rem 1rem;
 			}
-			img {
+			#list img {
 				width: 100%;
 				border-radius: 4px;
 			}
@@ -73,7 +82,14 @@
 			footer {
 				line-height: 1.6;
 				text-align: center;
-				padding: 0 1rem 2rem 0;
+				margin-top: 2.2rem;
+				padding: 0 1rem 2.2rem 1rem;
+			}
+
+			@media screen and (max-width: 480px) {
+				section:last-of-type {
+					margin-bottom: 3rem;
+				}
 			}
 
 			@media screen and (min-width: 481px) {
@@ -81,20 +97,17 @@
 					width: 420px;
 				}
 				#list {
-					padding: 1rem;
+					padding: 0 1rem;
 				}
 				section {
 					margin: 3rem 0;
 				}
-				img {
+				#list img {
 					width: 230px;
 					height: 345px;
 				}
 				ul {
 					margin: 0 1rem;
-				}
-				footer {
-					padding: 1rem 1rem 2rem 1rem;
 				}
 			}
 			@media screen and (min-width: 720px) {
@@ -120,6 +133,8 @@
 		</style>
 	</head>
 	<body>
+
+		<header><a href="/yify/"><img src="https://yts.mx/assets/images/website/logo-YTS.svg"></a></header>
 
 		<form>
 			<input type="text" name="movie" size="48" /><br />
