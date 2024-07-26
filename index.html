@@ -191,7 +191,7 @@
 					content=json.status_message;
 
 					if (urlParams.has('movie'))
-						content+="<br />Results for &ldquo;" + query + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />&larr;&nbsp;<a href='/'>Go back home</a>";
+						content+="<br />Results for &ldquo;" + query + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />&larr;&nbsp;<a href='/yify/'>Go back home</a>";
 					else
 						content+="<br />Last " + json.data.movies.length + " movies released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
 
