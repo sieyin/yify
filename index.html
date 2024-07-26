@@ -147,9 +147,8 @@
 				.then(response => response.json())
 				.then(json => {
 				console.log(json);
-										
-					var content="";
 
+					var content="";
 
 					if (json.data.movie_count) {
 
@@ -183,7 +182,7 @@
 								content+="<li><span class='up'>"+json.data.movies[i].torrents[j].type+"</span>&nbsp;"+json.data.movies[i].torrents[j].quality+"&nbsp;"+json.data.movies[i].torrents[j].video_codec+"&nbsp;"+json.data.movies[i].torrents[j].audio_channels+"&nbsp;&middot;&nbsp;<a href='"+json.data.movies[i].torrents[j].url+"'>"+json.data.movies[i].torrents[j].size+"</a></li>";
 							}
 							
-							content+="</ul></section>";						
+							content+="</ul></section>";
 						}
 						document.getElementById("list").innerHTML=content;
 
