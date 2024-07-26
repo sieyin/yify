@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
+		<title>YIFY Releases</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<style type="text/css" media="screen">
+			* {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				box-sizing: border-box;
+				font-family: "IBM Plex Sans", sans-serif;
+				color: #e0e0e0;
+			}
+			html, body {
+				width: 100%;
+				height: 100%;
+				background-color: #121212;
+			}
+			form {
+				margin: 2rem 1rem 4rem 1rem;
+				text-align: center;
+			}
+			input {
+				background-color: #323232;
+				font-size: 1.2rem;
+				font-weight: normal;
+				padding: 0 0.5rem;
+				width: 100%;
+				height: 36px;
+				border-radius: 4px;
+			}
+			input.button {
+				width: 200px;
+				margin-top: 1rem;
+			}
+			#list {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			section {
+				width: 100%;
+				text-align: center;
+				margin: 1rem 1rem 4rem 1rem;
+			}
+			img {
+				width: 100%;
+				border-radius: 4px;
+			}
+			h2 {
+				margin: 0.5rem 0 1rem 0;
+				font-size: 1.2rem;
+				font-weight: normal;
+			}
+			ul {
+				list-style: none;
+				text-align: left;
+				background-color: #282828;
+				padding: 0.3rem 0.6rem;
+				border-radius: 4px;
+			}
+			li {
+				line-height: 1.6;
+			}
+			.up{
+				text-transform: uppercase;
+			}
+			footer {
+				line-height: 1.6;
+				text-align: center;
+				padding: 0 1rem 2rem 0;
+			}
+
+			@media screen and (min-width: 481px) {
+				input {
+					width: 420px;
+				}
+				#list {
+					padding: 1rem;
+				}
+				section {
+					margin: 3rem 0;
+				}
+				img {
+					width: 230px;
+					height: 345px;
+				}
+				ul {
+					margin: 0 1rem;
+				}
+				footer {
+					padding: 1rem 1rem 2rem 1rem;
+				}
+			}
+			@media screen and (min-width: 720px) {
+				section {
+					width: 50%;
+				}
+			}
+			@media screen and (min-width: 1080px) {
+				section {
+					width: 33%;
+				}
+			}
+			@media screen and (min-width: 1440px) {
+				section {
+					width: 25%;
+				}
+			}
+			@media screen and (min-width: 1920px) {
+				section {
+					width: 16.66%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+
+		<form>
+			<input type="text" name="movie" size="48" /><br />
+			<input type="submit" value="Search" class="button" />
+		</form>
+
+		<div id="list"></div>
+
+		<footer id="status"></footer>
+
+		<script type="text/javascript">
+
+			const queryString = window.location.search;
+			console.log(queryString);
+
+			const urlParams = new URLSearchParams(queryString);
+			if (urlParams.has('movie')) {
+				var query = urlParams.get('movie');
+				var url = 'https://yts.mx/api/v2/list_movies.json?limit=48&sort_by=date_added&query_term='+query;
+			}
+			else
+				var url = 'https://yts.mx/api/v2/list_movies.json?limit=48&sort_by=date_added';
+
+			fetch(url)
+				.then(response => response.json())
+				.then(json => {
+				console.log(json);
+										
+					var content="";
+
+
+					if (json.data.movie_count) {
+
+						for (let i = 0; i < json.data.movies.length; i++) {
+							content+="<section>";
+
+							content+="<a target='_blank' href='"+json.data.movies[i].url+"'><img src='"+json.data.movies[i].large_cover_image+"' /></a>";
+
+							content+="<h2>"+json.data.movies[i].title_english+"</h2><ul><li>";
+
+							if (json.data.movies[i].year)
+								content+=json.data.movies[i].year;
+
+							if (json.data.movies[i].language)
+								content+="&nbsp;&middot;&nbsp;<span class='up'>"+json.data.movies[i].language+"</span>";
+							
+							if (json.data.movies[i].runtime)
+								content+="&nbsp;&middot;&nbsp;"+json.data.movies[i].runtime+"&nbsp;min";
+
+							if (json.data.movies[i].rating)
+								content+="</li><li><a target='_blank' href='https://www.imdb.com/title/"+json.data.movies[i].imdb_code+"'>IMDb</a>:&nbsp;"+json.data.movies[i].rating;
+							else
+								content+="</li><li><a target='_blank' href='https://www.imdb.com/title/"+json.data.movies[i].imdb_code+"'>IMDb</a>";
+
+							if (json.data.movies[i].yt_trailer_code)
+								content+="&nbsp;&middot;&nbsp;<a target='_blank' href='https://www.youtube.com/embed/"+json.data.movies[i].yt_trailer_code+"'>Trailer</a></li>";
+							else
+								content+="</li>"
+
+							for (let j = 0; j < json.data.movies[i].torrents.length; j++) {
+								content+="<li><span class='up'>"+json.data.movies[i].torrents[j].type+"</span>&nbsp;"+json.data.movies[i].torrents[j].quality+"&nbsp;"+json.data.movies[i].torrents[j].video_codec+"&nbsp;"+json.data.movies[i].torrents[j].audio_channels+"&nbsp;&middot;&nbsp;<a href='"+json.data.movies[i].torrents[j].url+"'>"+json.data.movies[i].torrents[j].size+"</a></li>";
+							}
+							
+							content+="</ul></section>";						
+						}
+						document.getElementById("list").innerHTML=content;
+
+					}
+
+					content=json.status_message;
+
+					if (urlParams.has('movie'))
+						content+="<br />Results for &ldquo;" + query + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />&larr;&nbsp;<a href='/'>Go back home</a>";
+					else
+						content+="<br />Last " + json.data.movies.length + " movies released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
+
+					document.getElementById("status").innerHTML=content;
+
+			});
+		</script>
+
+	</body>
+</html>
