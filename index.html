@@ -35,21 +35,23 @@
 				font-size: 1.16rem;
 				font-weight: normal;
 			}
-			h2 a {
+			h2 a, a.arrow {
 				text-decoration: none;
 			}
 			h2 a:hover {
 				text-decoration: underline;
 			}
-			input, ul, ul img {
+			input, ul, ul img, a.arrow {
 				border-radius: 4px;
 			}
-			input, .error {
+			input, a.arrow, .error {
 				padding: 0.25rem 0.5rem;
+			}
+			input, a.arrow {
+				background-color: #323232;
 			}
 			input {
 				margin-top: 2rem;
-				background-color: #323232;
 				width: 90%;
 				height: 36px;
 			}
@@ -90,14 +92,14 @@
 			p {
 				margin: 2rem 0;
 			}
+			footer {
+				padding: 1rem;
+			}
 			.up {
 				text-transform: uppercase;
 			}
 			.error { 
 				background-color: #c44;
-			}
-			footer {
-				padding: 3rem 1.5rem;
 			}
 			
 			@media screen and (min-width: 375px) {
@@ -166,7 +168,6 @@
 		</style>
 	</head>
 	<body>
-
 		<header>
 			<a href="/yify/"><img src="logo-YTS.svg"></a>
 			<form>
@@ -181,77 +182,120 @@
 
 		<script type="text/javascript">
 
+// BUILD THE URL FOR SEARCH, PAGINATION, AND LISTING
 			const queryString = window.location.search;
-			console.log(queryString);
-
 			const urlParams = new URLSearchParams(queryString);
-			if (urlParams.has('movie')) {
-				var query = urlParams.get('movie');
-				var url = 'https://yts.mx/api/v2/list_movies.json?limit=50&sort_by=date_added&query_term=' + query;
-			}
-			else
-				var url = 'https://yts.mx/api/v2/list_movies.json?limit=50&sort_by=date_added';
 
+			if (urlParams.has('movie') && urlParams.has('page'))
+				var url = "https://yts.mx/api/v2/list_movies.json?limit=50&sort_by=date_added&page=" + urlParams.get('page') + "&query_term=" + urlParams.get('movie');
+			else if (urlParams.has('movie'))
+				var url = "https://yts.mx/api/v2/list_movies.json?limit=50&sort_by=date_added&query_term=" + urlParams.get('movie');
+			else if (urlParams.has('page'))
+				var url = "https://yts.mx/api/v2/list_movies.json?limit=50&sort_by=date_added&page=" + urlParams.get('page');
+			else
+				var url = "https://yts.mx/api/v2/list_movies.json?limit=50&sort_by=date_added";
+
+// FETCH THE JSON FROM THE URL
 			fetch(url)
 				.then(response => response.json())
 				.then(json => {
-				console.log(json);
 
-					var content = "";
+					if (json.data.movies) {
 
-					if (json.data.movie_count) {
+						var content_list = "";
 
 						for (let i = 0; i < json.data.movies.length; i++) {
-							content += "<section><ul>";
 
-							content += "<li><h2><a href='?movie=" + json.data.movies[i].imdb_code + "'>" + json.data.movies[i].title_english + "</a></h2><li>";
+							content_list += "<section><ul>";
 
-							content += "<li><a target='_blank' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a></li>";
+							content_list += "<li><h2><a href='?movie=" + json.data.movies[i].imdb_code + "'>" + json.data.movies[i].title_english + "</a></h2><li>";
+
+							content_list += "<li><a target='_blank' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a></li>";
 
 							if (json.data.movies[i].year)
-								content += json.data.movies[i].year;
+								content_list += json.data.movies[i].year;
 
 							if (json.data.movies[i].language)
-								content += "&nbsp;&middot;&nbsp;<span class='up'>" + json.data.movies[i].language + "</span>";
+								content_list += "&nbsp;&middot;&nbsp;<span class='up'>" + json.data.movies[i].language + "</span>";
 							
 							if (json.data.movies[i].runtime)
-								content += "&nbsp;&middot;&nbsp;" + json.data.movies[i].runtime + "&nbsp;min";
+								content_list += "&nbsp;&middot;&nbsp;" + json.data.movies[i].runtime + "&nbsp;min";
 
 							if (json.data.movies[i].rating)
-								content += "</li><li><a target='_blank' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>:&nbsp;" + json.data.movies[i].rating;
+								content_list += "</li><li><a target='_blank' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>:&nbsp;" + json.data.movies[i].rating;
 							else
-								content += "</li><li><a target='_blank' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>";
+								content_list += "</li><li><a target='_blank' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>";
 
 							if (json.data.movies[i].yt_trailer_code)
-								content += "&nbsp;&middot;&nbsp;<a target='_blank' href='https://www.youtube.com/embed/" + json.data.movies[i].yt_trailer_code + "'>Trailer</a></li>";
+								content_list += "&nbsp;&middot;&nbsp;<a target='_blank' href='https://www.youtube.com/embed/" + json.data.movies[i].yt_trailer_code + "'>Trailer</a></li>";
 							else
-								content += "</li>"
+								content_list += "</li>"
 
 							for (let j = 0; j < json.data.movies[i].torrents.length; j++) {
-								content += "<li><span class='up'>" + json.data.movies[i].torrents[j].type + "</span>&nbsp;" + json.data.movies[i].torrents[j].quality + "&nbsp;" + json.data.movies[i].torrents[j].video_codec + "&nbsp;" + json.data.movies[i].torrents[j].audio_channels + "&nbsp;&middot;&nbsp;<a href='" + json.data.movies[i].torrents[j].url + "'>" + json.data.movies[i].torrents[j].size + "</a></li>";
+								content_list += "<li><span class='up'>" + json.data.movies[i].torrents[j].type + "</span>&nbsp;" + json.data.movies[i].torrents[j].quality + "&nbsp;" + json.data.movies[i].torrents[j].video_codec + "&nbsp;" + json.data.movies[i].torrents[j].audio_channels + "&nbsp;&middot;&nbsp;<a href='" + json.data.movies[i].torrents[j].url + "'>" + json.data.movies[i].torrents[j].size + "</a></li>";
 							}
-							
-							content += "</ul></section>";
+
+							content_list += "</ul></section>";
 						}
-						document.getElementById("list").innerHTML = content;
+
+						var content_foot = "<p>";
+
+// BUILD THE FOOT FOR SEARCH
+						if (urlParams.has('movie'))
+							content_foot = json.data.movie_count + " Result(s) for &ldquo;" + urlParams.get('movie') + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />Result(s) " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length);
+// BUILD THE FOOT FOR LISTING						
+						else
+							content_foot = "Movies " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length) + " released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
+
+						content_foot += "</p>";
+
+// BUILD THE PAGINATION
+						content_foot += "<p>";
+
+						if (json.data.page_number > 1) {
+							var page = json.data.page_number - 1;
+							if (urlParams.has('movie'))
+								content_foot += "<a class='arrow' href='" + window.location.pathname + "?movie=" + urlParams.get('movie') + "&page=" + page + "'>&larr;</a>&nbsp;&nbsp;&nbsp;";
+							else
+								content_foot += "<a class='arrow' href='" + window.location.pathname + "?page=" + page + "'>&larr;</a>&nbsp;&nbsp;&nbsp;";
+						}
+						
+						if (json.data.movie_count > json.data.limit)
+							content_foot +=  json.data.page_number;
+
+						if (json.data.movie_count > json.data.limit && json.data.movies.length == json.data.limit) {
+							var page = json.data.page_number + 1;
+							if (urlParams.has('movie'))
+								content_foot += "&nbsp;&nbsp;&nbsp;<a class='arrow' href='" + window.location.pathname + "?movie=" + urlParams.get('movie') + "&page=" + page + "'>&rarr;</a>";
+							else
+								content_foot += "&nbsp;&nbsp;&nbsp;<a class='arrow' href='" + window.location.pathname + "?page=" + page + "'>&rarr;</a>";
+						}
+
+						content_foot += "</p>";
 					}
+
+// NO RESULTS
 					else {
-						var content = "<p>No Results</p>";
-						document.getElementById("list").innerHTML = content;
+						var content_list = "<p>No Results</p>";
+
+						if (urlParams.has('movie'))
+							content_foot = "<p>No results for &ldquo;" + urlParams.get('movie') + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies";
+						else
+							content_foot = "<p>No more movies released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies";
 					}
 
-					if (urlParams.has('movie'))
-						content = json.data.movie_count + " Results for &ldquo;" + query + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />&larr;&nbsp;<a href='/yify/'>Go back home</a>";
-					else
-						content = "Last " + json.data.movies.length + " movies released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
-
-					document.getElementById("foot").innerHTML = content;
+// RENDER THE HTML CONTENT
+					document.getElementById("list").innerHTML = content_list;
+					document.getElementById("foot").innerHTML = content_foot;
 				})
+
+// MANAGE FETCH ERRORS
 				.catch((error) => {
-					var content = "<p><span class='error'>ERROR</span><br /><br />No connection with the API</p>";
-					document.getElementById("list").innerHTML = content;
+
+					var content_list = "<p><span class='error'>ERROR</span><br /><br />Couldn't fetch data from the API</p>";
+					document.getElementById("list").innerHTML = content_list;
+
 				})
 		</script>
-
 	</body>
 </html>
