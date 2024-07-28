@@ -105,7 +105,7 @@
 				background-color: #c44;
 			}
 			
-			@media screen and (min-width: 550px) {
+			@media screen and (min-width: 480px) {
 				input {
 					max-width: 480px;
 				}
@@ -214,12 +214,12 @@
 
 							content_list += "<section><ul>";
 
-							content_list += "<li><h2><a href='?movie=" + json.data.movies[i].imdb_code + "'>" + json.data.movies[i].title_english + "</a></h2><li>";
+							content_list += "<li><h2><a href='?movie=" + json.data.movies[i].imdb_code + "'>" + json.data.movies[i].title_english + "</a></h2></li>";
 
 							content_list += "<li><a target='_blank' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a></li>";
 
 							if (json.data.movies[i].year)
-								content_list += json.data.movies[i].year;
+								content_list += "<li>" + json.data.movies[i].year;
 
 							if (json.data.movies[i].language)
 								content_list += "&nbsp;&middot;&nbsp;<span class='up'>" + json.data.movies[i].language + "</span>";
