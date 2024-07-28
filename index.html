@@ -29,7 +29,7 @@
 				text-align: center;
 			}
 			header {
-				padding: 3rem 1.5rem;
+				padding: 2.5rem 1.5rem 3rem 1.5rem;
 			}
 			input, h2 {
 				font-size: 1.16rem;
@@ -93,7 +93,7 @@
 				margin: 2rem 0;
 			}
 			footer {
-				padding: 1rem;
+				padding: 0.5rem 1.5rem 1rem 1.5rem;
 			}
 			.up {
 				text-transform: uppercase;
@@ -242,10 +242,10 @@
 
 // BUILD THE FOOT FOR SEARCH
 						if (urlParams.has('movie'))
-							content_foot = json.data.movie_count + " Result(s) for &ldquo;" + urlParams.get('movie') + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />Result(s) " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length);
+							content_foot += json.data.movie_count + " Result(s) for &ldquo;" + urlParams.get('movie') + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br />Result(s) " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length);
 // BUILD THE FOOT FOR LISTING						
 						else
-							content_foot = "Movies " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length) + " released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
+							content_foot += "Movies " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length) + " released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
 
 						content_foot += "</p>";
 
