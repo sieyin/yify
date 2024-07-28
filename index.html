@@ -35,6 +35,12 @@
 				font-size: 1.16rem;
 				font-weight: normal;
 			}
+			h2 a {
+				text-decoration: none;
+			}
+			h2 a:hover {
+				text-decoration: underline;
+			}
 			input, ul, ul img {
 				border-radius: 4px;
 			}
@@ -198,7 +204,7 @@
 						for (let i = 0; i < json.data.movies.length; i++) {
 							content += "<section><ul>";
 
-							content += "<li><h2>" + json.data.movies[i].title_english + "</h2><li>";
+							content += "<li><h2><a href='?movie=" + json.data.movies[i].imdb_code + "'>" + json.data.movies[i].title_english + "</a></h2><li>";
 
 							content += "<li><a target='_blank' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a></li>";
 
