@@ -162,7 +162,7 @@
 	<body>
 
 		<header>
-			<a href="/"><img src="logo-YTS.svg"></a>
+			<a href="/yify/"><img src="logo-YTS.svg"></a>
 			<form>
 				<input type="text" name="movie" size="48" /><br />
 				<input type="submit" value="Search" class="button" />
@@ -235,7 +235,7 @@
 					}
 
 					if (urlParams.has('movie'))
-						content = json.data.movie_count + " Results for &ldquo;" + query + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />&larr;&nbsp;<a href='/'>Go back home</a>";
+						content = json.data.movie_count + " Results for &ldquo;" + query + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br /><br />&larr;&nbsp;<a href='/yify/'>Go back home</a>";
 					else
 						content = "Last " + json.data.movies.length + " movies released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
 
