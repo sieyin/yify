@@ -23,13 +23,13 @@
 				height: 100%;
 			}
 			body {
-				background-color: #111;
+				background-color: #171717;
 			}
 			header, h2, p, footer {
 				text-align: center;
 			}
 			header {
-				padding: 2.5rem 1.5rem 3rem 1.5rem;
+				padding: 2.5rem 1rem 3rem 1rem;
 			}
 			input, h2 {
 				font-size: 1.16rem;
@@ -41,14 +41,14 @@
 			h2 a:hover {
 				text-decoration: underline;
 			}
-			input, ul, ul img, a.arrow {
+			input, a.arrow {
 				border-radius: 4px;
 			}
 			input, a.arrow, .error {
 				padding: 0.25rem 0.5rem;
 			}
-			input, a.arrow {
-				background-color: #222;
+			input, h2, ul, a.arrow {
+				background-color: #282828;
 			}
 			input {
 				margin-top: 2rem;
@@ -63,18 +63,23 @@
 				display: flex;
 				flex-wrap: wrap;
 				padding: 1.5rem 0;
-				border-top: 1px dashed #444;
-				border-bottom: 1px dashed #444;
+				background-color: #1d1d1d;
+				border-top: 1px dashed #333;
+				border-bottom: 1px dashed #333;
 			}
 			section, p {
 				width: 100%;
 			}
+			section {
+				padding: 1rem;
+			}
 			ul {
 				list-style: none;
 				text-align: left;
-				margin: 1.5rem 1rem;
-				padding: 0.5rem 1rem 0.75rem 1rem;
-				background-color: #282828;
+				vertical-align: top;
+				margin-bottom: 0.5rem;
+				padding: 0.75rem 1rem;
+				border-radius: 0 0 4px 4px;
 			}
 			li, p, footer {
 				line-height: 1.6;
@@ -83,11 +88,15 @@
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
+				margin-top: 0.5rem;
+				padding: 0.5rem 1rem 0.66rem 1rem;
+				border-radius: 4px 4px 0 0;
 			}
-			ul img {
+			section img {
 				width: 100%;
+				display: block;
 				aspect-ratio: 2/3;
-				margin: 0.5rem 0;
+				background-color: #171717;
 			}
 			#list p {
 				margin: 1.5rem;
@@ -96,7 +105,7 @@
 				margin: 2rem 0;
 			}
 			#foot {
-				padding: 0.5rem 1.5rem 1rem 1.5rem;
+				padding: 0.5rem 1rem 1rem 1rem;
 			}
 			.up {
 				text-transform: uppercase;
@@ -106,14 +115,20 @@
 			}
 			
 			@media screen and (min-width: 480px) {
+				header {
+					padding: 2.5rem 1.5rem 3rem 1.5rem;
+				}
 				input {
-					max-width: 480px;
+					max-width: 385px;
 				}
 				#list {
 					padding: 1.5rem;
 				}
-				ul {
-					margin: 1.5rem;
+				section {
+					padding: 1rem 1.5rem;
+				}
+				#foot {
+					padding: 0.5rem 1.5rem 1rem 1.5rem;
 				}
 			}
 			@media screen and (min-width: 750px) {
@@ -175,7 +190,7 @@
 	</head>
 	<body>
 		<header>
-			<a href="/yify/"><img src="logo-YTS.svg"></a>
+			<a href="/"><img src="logo-YTS.svg"></a>
 			<form>
 				<input type="text" name="movie" size="48" /><br />
 				<input type="submit" value="Search" class="button" />
@@ -212,11 +227,11 @@
 
 						for (let i = 0; i < json.data.movies.length; i++) {
 
-							content_list += "<section><ul>";
+							content_list += "<section>";
 
-							content_list += "<li><h2><a href='?movie=" + json.data.movies[i].imdb_code + "'>" + json.data.movies[i].title_english + "</a></h2></li>";
+							content_list += "<h2><a href='?movie=" + json.data.movies[i].imdb_code + "'>" + json.data.movies[i].title_english + "</a></h2>";
 
-							content_list += "<li><a target='_blank' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a></li>";
+							content_list += "<a target='_blank' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a><ul>";
 
 							if (json.data.movies[i].year)
 								content_list += "<li>" + json.data.movies[i].year;
