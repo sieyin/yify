@@ -239,9 +239,9 @@
 
 							for (let j = 0; j < json.data.movies[i].torrents.length; j++) {
 								if (json.data.movies[i].torrents[j].video_codec == 'x264' && json.data.movies[i].torrents[j].quality == '1080p')
-									webtor_href	= "webtor.html?torrent=" + json.data.movies[i].torrents[j].url + "&imdb=" + json.data.movies[i].imdb_code + "&titlen=" + encodeURIComponent(json.data.movies[i].title_english);
+									webtor_href	= "play/?torrent=" + json.data.movies[i].torrents[j].url + "&imdb=" + json.data.movies[i].imdb_code + "&titlen=" + encodeURIComponent(json.data.movies[i].title_english);
 								else if (json.data.movies[i].torrents[j].video_codec == 'x264' && json.data.movies[i].torrents[j].quality == '720p')
-									webtor_href	= "webtor.html?torrent=" + json.data.movies[i].torrents[j].url + "&imdb=" + json.data.movies[i].imdb_code + "&titlen=" + encodeURIComponent(json.data.movies[i].title_english);
+									webtor_href	= "play?torrent=" + json.data.movies[i].torrents[j].url + "&imdb=" + json.data.movies[i].imdb_code + "&titlen=" + encodeURIComponent(json.data.movies[i].title_english);
 							}
 
 							content_list += "<a target='_blank' title='Play the movie' href='" + webtor_href + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a><ul>";
