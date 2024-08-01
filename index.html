@@ -31,7 +31,7 @@
 			header {
 				padding: 2.5rem 1rem 3rem 1rem;
 			}
-			input, h2 {
+			input, button, h2 {
 				font-size: 1.16rem;
 				font-weight: normal;
 			}
@@ -41,23 +41,26 @@
 			h2 a:hover {
 				text-decoration: underline;
 			}
-			input, a.arrow {
+			input, button, a.arrow {
 				border-radius: 4px;
 			}
-			input, a.arrow, .error {
+			input, button, a.arrow, .error {
 				padding: 0.25rem 0.5rem;
 			}
-			input, h2, ul, a.arrow {
+			input, button, h2, ul, a.arrow {
 				background-color: #282828;
 			}
+			input, button {
+				height: 36px;
+			}			
 			input {
 				margin-top: 2rem;
 				width: 100%;
-				height: 36px;
 			}
-			input:last-of-type {
+			button {
 				margin-top: 1rem;
 				width: 160px;
+				cursor: pointer;
 			}
 			#list {
 				display: flex;
@@ -193,7 +196,7 @@
 			<a href="/yify/"><img src="logo-YTS.svg"></a>
 			<form>
 				<input type="text" name="movie" size="48" /><br />
-				<input type="submit" value="Search" class="button" />
+				<button type="button"">Search</button>
 			</form>
 		</header>
 

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap" rel="stylesheet">
 		<title>Simple Webtor</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="shortcut icon" href="favicon.ico">
@@ -17,35 +20,35 @@
 			html, body {
 				height: 100%;
 			}
-			div {
-				height: calc(100% - 12.5rem);
+			#player {
+				width: 100%;
+				aspect-ratio: 16/9;
+				position: relative;
 			}
 			body {
 				background-color: #1d1d1d;
-			}
-			#player {
-				position: relative;
 			}
 			iframe {
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				max-width: calc(100% - 4rem);
-				max-height: calc(100% - 4rem);
+				max-width: calc(100% - 2rem);
+				max-height: calc(100% - 2rem);
 				-ms-transform: translate(-50%, -50%);
 				transform: translate(-50%, -50%);
 				border-radius: 6px;
 			}
 			form {
-				max-width: calc(100% - 4rem);
+				max-width: calc(100% - 2rem);
 				margin: 0 auto;
-				display: flex;
-				justify-content: space-between;
+				padding: 1rem 0;
+				overflow: auto;
+				border-top: 1px dashed #282828;
 			}
 			textarea, button {
 				background-color: #121212;
 				color: #f0f0f0;
-				font-family: monospace;
+				font-family: "IBM Plex Sans", sans-serif;
 				font-size: 1rem;
 				line-height: 1.6;
 				border-radius: 4px;
@@ -54,20 +57,45 @@
 			textarea {
 				resize: none;
 				padding: 0.2rem 0.4rem;
-				width: calc(100% - 12rem);
-				height: 10rem;
-				max-height: 24rem;
+				width: calc(100% - 1rem);
+				height: 7.2rem;
 			}
 			button {
 				width: 9rem;
 				height: 3.6rem;
-				margin-left: 1rem;
+				margin-top: 1rem;
 				display: block;
+				float: right;
 			}
 			button:hover {
 				cursor: pointer;
 				background-color: #f90;
 				color: #282828;
+			}
+
+			@media screen and (orientation: portrait) {
+				#player {
+					aspect-ratio: 16/9;
+				}
+			}
+			@media screen and (min-width: 1024px) {
+				#player {
+					height: calc(100% - 12rem);
+				}
+				iframe {
+					max-width: calc(100% - 4rem);
+					max-height: calc(100% - 4rem);
+				}
+				form {
+					max-width: calc(100% - 4rem);
+					padding: 2rem 0;
+					display: flex;
+					justify-content: space-between;	
+				}
+				button {
+					margin-top: 0;
+					margin-left: 1rem;
+				}
 			}
 	</style>
 	</head>
