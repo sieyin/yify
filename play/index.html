@@ -75,14 +75,14 @@
 		<div id="player"></div>
 
 		<form>
-			<textarea id="url" placeholder="To play the HLS stream, click on the gear icon (&#9881;) of the player, then on the 'Copy stream url' button, paste it here, and click 'Play HLS'."></textarea>
-			<button type="button" onclick="hls(document.getElementById('url').value);">Play HLS</button>
+			<textarea id="geturl" placeholder="To play the HLS stream, click on the gear icon (&#9881;) of the player, then on the 'Copy stream url' button, paste it here, and click 'Play HLS'."></textarea>
+			<button type="button" onclick="hls(document.getElementById('geturl').value);">Play HLS</button>
 		</form>
 
 		<script type="text/javascript">
 			function hls(url) {
 				if (url)
-					window.location = "../hls/?" + titlen + "******" + document.getElementById('url').value;
+					window.location = "../hls/?" + titlen + "******" + url;
 			}
 		</script>
 
