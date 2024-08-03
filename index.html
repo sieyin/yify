@@ -44,8 +44,16 @@
 			input, button, a.arrow {
 				border-radius: 4px;
 			}
-			input, button, a.arrow, .error {
+			input, button, .error {
 				padding: 0.25rem 0.5rem;
+			}
+			a.arrow {
+				font-size: 1.25rem;
+				padding: 0.5rem 1rem;
+			}
+			button:hover, a.arrow:hover {
+				color: #282828;
+				background-color: #f90;
 			}
 			input, button, h2, ul, a.arrow {
 				background-color: #282828;
@@ -291,9 +299,9 @@
 						if (json.data.page_number > 1) {
 							var page = json.data.page_number - 1;
 							if (urlParams.has('movie'))
-								content_foot += "<a class='arrow' href='" + window.location.pathname + "?movie=" + urlParams.get('movie') + "&page=" + page + "'>&larr;</a>&nbsp;&nbsp;&nbsp;";
+								content_foot += "<a class='arrow' href='" + window.location.pathname + "?movie=" + urlParams.get('movie') + "&page=" + page + "'>&larr;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 							else
-								content_foot += "<a class='arrow' href='" + window.location.pathname + "?page=" + page + "'>&larr;</a>&nbsp;&nbsp;&nbsp;";
+								content_foot += "<a class='arrow' href='" + window.location.pathname + "?page=" + page + "'>&larr;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 						}
 						
 						if (json.data.movie_count > json.data.limit)
@@ -302,9 +310,9 @@
 						if (json.data.movie_count > json.data.limit && json.data.movies.length == json.data.limit) {
 							var page = json.data.page_number + 1;
 							if (urlParams.has('movie'))
-								content_foot += "&nbsp;&nbsp;&nbsp;<a class='arrow' href='" + window.location.pathname + "?movie=" + urlParams.get('movie') + "&page=" + page + "'>&rarr;</a>";
+								content_foot += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class='arrow' href='" + window.location.pathname + "?movie=" + urlParams.get('movie') + "&page=" + page + "'>&rarr;</a>";
 							else
-								content_foot += "&nbsp;&nbsp;&nbsp;<a class='arrow' href='" + window.location.pathname + "?page=" + page + "'>&rarr;</a>";
+								content_foot += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class='arrow' href='" + window.location.pathname + "?page=" + page + "'>&rarr;</a>";
 						}
 
 						content_foot += "</p>";
