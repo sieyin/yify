@@ -244,16 +244,7 @@
 
 							// content_list += "<a target='_blank' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a><ul>";
 
-							var webtor_href = json.data.movies[i].url;
-
-							for (let j = 0; j < json.data.movies[i].torrents.length; j++) {
-								if (json.data.movies[i].torrents[j].video_codec == 'x264' && json.data.movies[i].torrents[j].quality == '1080p')
-									webtor_href	= "play/?torrent=" + json.data.movies[i].torrents[j].url + "&imdb=" + json.data.movies[i].imdb_code + "&titlen=" + encodeURIComponent(json.data.movies[i].title_english + " (" + json.data.movies[i].year + ")");
-								else if (json.data.movies[i].torrents[j].video_codec == 'x264' && json.data.movies[i].torrents[j].quality == '720p')
-									webtor_href	= "play?torrent=" + json.data.movies[i].torrents[j].url + "&imdb=" + json.data.movies[i].imdb_code + "&titlen=" + encodeURIComponent(json.data.movies[i].title_english + " (" + json.data.movies[i].year + ")");
-							}
-
-							content_list += "<a target='_blank' title='Play the movie' href='" + webtor_href + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a><ul>";
+							content_list += "<a target='_blank' title='Go to the movie&apos;s YIFY page' href='" + json.data.movies[i].url + "'><img src='" + json.data.movies[i].large_cover_image + "' /></a><ul>";
 
 							content_list += "<li>" + json.data.movies[i].year;
 
@@ -263,12 +254,10 @@
 							if (json.data.movies[i].runtime)
 								content_list += "&nbsp;&middot;&nbsp;" + json.data.movies[i].runtime + "&nbsp;min";
 
-							content_list += "</li><li><a target='_blank' title='Go to the movie&apos;s YIFY page' href='" + json.data.movies[i].url + "'>YIFY</a>"
-
 							if (json.data.movies[i].rating)
-								content_list += "&nbsp;&middot;&nbsp;<a target='_blank' title='Go to the movie&apos;s IMDb page' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>:&nbsp;" + json.data.movies[i].rating;
+								content_list += "</li><li><a target='_blank' title='Go to the movie&apos;s IMDb page' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>:&nbsp;" + json.data.movies[i].rating;
 							else
-								content_list += "&nbsp;&middot;&nbsp;<a target='_blank' title='Go to the movie&apos;s IMDb page' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>";
+								content_list += "</li><li><a target='_blank' title='Go to the movie&apos;s IMDb page' href='https://www.imdb.com/title/" + json.data.movies[i].imdb_code + "'>IMDb</a>";
 
 							if (json.data.movies[i].yt_trailer_code)
 								content_list += "&nbsp;&middot;&nbsp;<a target='_blank' title='Play the trailer' href='https://www.youtube.com/embed/" + json.data.movies[i].yt_trailer_code + "'>Trailer</a></li>";
@@ -284,10 +273,10 @@
 
 						var content_foot = "<p>";
 
-// BUILD THE FOOT FOR SEARCH
+// BUILD THE FOOTER FOR SEARCH
 						if (urlParams.has('movie'))
 							content_foot += json.data.movie_count + " Result(s) for &ldquo;" + urlParams.get('movie') + "&rdquo; at <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a><br />Result(s) " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length);
-// BUILD THE FOOT FOR LISTING						
+// BUILD THE FOOTER FOR LISTING						
 						else
 							content_foot += "Movies " + parseInt((json.data.limit*json.data.page_number)-(json.data.limit-1)) + " to " + parseInt((json.data.limit*(json.data.page_number-1))+json.data.movies.length) + " released by <a target='_blank' href='https://yts.mx/browse-movies'>YIFY Movies</a>";
 
